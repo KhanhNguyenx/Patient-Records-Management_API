@@ -47,7 +47,11 @@ module.exports.login = async (req, res) => {
     });
     if (account) {
       const token = account.token;
-      res.cookie("token", token);
+      res.cookie("token", token,{
+        maxAge: 24 * 60 * 60 * 1000, // 1 ngày
+        httpOnly: true, // không cho phép truy cập từ JS trên client (nếu cần)
+        // secure: true, // nếu bạn sử dụng HTTPS
+      });
       res.json({
         code: 200,
         message: "Đăng nhập thành công!",
@@ -63,6 +67,42 @@ module.exports.login = async (req, res) => {
     res.json({
       code: 400,
       message: "Đăng nhập thất bại!",
+    });
+  }
+};
+//[POST] /api/accounts/reset-password
+module.exports.changePassword = async (req, res) => {
+  try {
+    const oldPassword = md5(req.body.oldPassword);
+    const token = req.account.token;
+    const account = await Account.findOne({
+      token: token,
+      password: oldPassword,
+      deleted: false,
+    });
+    if (account) {
+      await Account.updateOne(
+        {
+          token: token,
+        },
+        {
+          password: md5(req.body.newPassword),
+        }
+      );
+      res.json({
+        code: 200,
+        message: "Đổi mật khẩu thành công!",
+      });
+    } else {
+      res.json({
+        code: 400,
+        message: "Mật khẩu cũ không đúng!",
+      });
+    }
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Đổi mật khẩu thất bại!",
     });
   }
 };

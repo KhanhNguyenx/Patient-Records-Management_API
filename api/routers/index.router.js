@@ -1,6 +1,7 @@
 const patientRoutes = require("./patient.router");
 const doctorRoutes = require("./doctor.router");
 const accountRoutes = require("./account.router");
+const authMiddleware = require("../middlewares/auth.middleware");
 module.exports = (app) => {
   const version = "/api";
 
