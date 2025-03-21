@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const billSchema = new mongoose.Schema(
   {
     patient_id: { type: String, default: "" },
+    doctor_id: { type: String, default: "" },
+    prescription_id: { type: String, default: "" },
     amount: Number,
     dateIssued: Date,
     status: {

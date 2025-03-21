@@ -8,8 +8,17 @@ const prescriptionSchema = new mongoose.Schema(
       type: String,
       default: "Pending",
     },
-    medication: String,
-    dosage: String,
+    // Trạng thái của đơn thuốc:
+    // "Pending": Đơn thuốc đang chờ duyệt.
+    // "Approved": Đơn thuốc đã được duyệt.
+    // "Rejected": Đơn thuốc bị từ chối.
+    // "Completed": Đơn thuốc đã hoàn thành/được sử dụng.
+    medications: [
+      {
+        name: { type: String, required: true },
+        dosage: { type: String },
+      },
+    ],
     startDate: Date,
     endDate: Date,
     createdBy: String,
@@ -25,6 +34,10 @@ const prescriptionSchema = new mongoose.Schema(
   }
 );
 
-const Prescription = mongoose.model("Prescription", prescriptionSchema, "prescriptions");
+const Prescription = mongoose.model(
+  "Prescription",
+  prescriptionSchema,
+  "prescriptions"
+);
 
 module.exports = Prescription;
