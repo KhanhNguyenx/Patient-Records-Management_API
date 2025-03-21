@@ -42,3 +42,18 @@ module.exports.getList = async (req, res) => {
 
   res.json(prescription);
 };
+// [GET] /api/appointment/getById/:id
+module.exports.getById = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const result = await Prescription.findOne({
+      _id: id,
+      deleted: false,
+    });
+
+    res.json(result);
+  } catch (error) {
+    res.json("Không tìm thấy!");
+  }
+};
