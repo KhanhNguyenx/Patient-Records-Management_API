@@ -4,6 +4,7 @@ const accountRoutes = require("./account.router");
 const appointmentRoutes = require("./appointment.router");
 const prescriptionRoutes = require("./prescription.router");
 const specialtyRoutes = require("./specialty.router");
+const billRoutes = require("./bill.router");
 const authMiddleware = require("../middlewares/auth.middleware");
 module.exports = (app) => {
   const version = "/api";
@@ -19,6 +20,7 @@ module.exports = (app) => {
   app.use(version + "/prescription", prescriptionRoutes);
 
   app.use(version + "/specialty", specialtyRoutes);
-  
+
+  app.use(version + "/bill", billRoutes);
 
 };
