@@ -6,12 +6,13 @@ const medicalHistorySchema = new mongoose.Schema(
     doctor_id: { type: String, default: "" },
     status: {
       type: String,
-      default: "Pending",
+      enum: ["Pending", "Active", "Closed", "Referred"],
+      default: "Pending"
     },
     visitDate: Date,
-    symptoms: String,
-    diagnosis: String,
-    treatment: String,
+    symptoms: [String], 
+    diagnosis: [String],
+    treatment: [String],    
     createdBy: String,
     createdAt: Date,
     deleted: {

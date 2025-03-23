@@ -6,6 +6,7 @@ const prescriptionRoutes = require("./prescription.router");
 const specialtyRoutes = require("./specialty.router");
 const billRoutes = require("./bill.router");
 const labResultRoutes = require("./bill.router");
+const medicalHistoryRoutes = require("./medicalHistory.router");
 const authMiddleware = require("../middlewares/auth.middleware");
 module.exports = (app) => {
   const version = "/api";
@@ -25,5 +26,7 @@ module.exports = (app) => {
   app.use(version + "/bill", billRoutes);
 
   app.use(version + "/labresult", labResultRoutes);
+
+  app.use(version + "/medicalhistory", medicalHistoryRoutes);
 
 };
