@@ -55,8 +55,7 @@ module.exports.login = async (req, res) => {
       res.json({
         success: true,
         code: 200,
-        message: "Đăng nhập thành công!",
-        token: token,
+        message: token,
         data: account,
       });
     } else {
