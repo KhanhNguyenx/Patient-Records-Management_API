@@ -53,19 +53,22 @@ module.exports.login = async (req, res) => {
         // secure: true, // nếu bạn sử dụng HTTPS
       });
       res.json({
+        success: true,
         code: 200,
         message: "Đăng nhập thành công!",
         token: token,
-        account: account,
+        data: account,
       });
     } else {
       res.json({
+        success: false,
         code: 400,
         message: "Email hoặc mật khẩu không đúng!",
       });
     }
   } catch (error) {
     res.json({
+      success: false,
       code: 400,
       message: "Đăng nhập thất bại!",
     });
