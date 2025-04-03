@@ -7,7 +7,7 @@ const labResultSchema = new mongoose.Schema(
     status: {
       type: String,
       default: "Pending",
-    },
+    }, //Pending, In Progress, Completed, Cancelled, Failed
     testType: String,
     testDate: Date,
     results: String,

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const controller = require("../controllers/labResult.controller");
+const controller = require("../controllers/bill.controller");
 
 router.get("/getList", controller.getList);
 
