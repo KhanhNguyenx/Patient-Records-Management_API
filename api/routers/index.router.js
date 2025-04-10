@@ -13,7 +13,7 @@ module.exports = (app) => {
 
   app.use(version + "/account", accountRoutes);
 
-  app.use(version + "/patient", authMiddleware.requireAuth, patientRoutes);
+  app.use(version + "/patient", patientRoutes);
 
   app.use(version + "/doctor", doctorRoutes);
 
