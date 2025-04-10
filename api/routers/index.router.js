@@ -17,16 +17,16 @@ module.exports = (app) => {
 
   app.use(version + "/doctor", doctorRoutes);
 
-  app.use(version + "/appointment", authMiddleware.requireAuth, appointmentRoutes);
+  app.use(version + "/appointment" , appointmentRoutes);
 
-  app.use(version + "/prescription", authMiddleware.requireAuth, prescriptionRoutes);
+  app.use(version + "/prescription", prescriptionRoutes);
 
-  app.use(version + "/specialty", authMiddleware.requireAuth, specialtyRoutes);
+  app.use(version + "/specialty", specialtyRoutes);
 
-  app.use(version + "/bill", authMiddleware.requireAuth, billRoutes);
+  app.use(version + "/bill", billRoutes);
 
-  app.use(version + "/labresult", authMiddleware.requireAuth, labResultRoutes);
+  app.use(version + "/labresult", labResultRoutes);
 
-  app.use(version + "/medicalhistory", authMiddleware.requireAuth, medicalHistoryRoutes);
+  app.use(version + "/medicalhistory", medicalHistoryRoutes);
 
 };
