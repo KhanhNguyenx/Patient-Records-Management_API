@@ -15,7 +15,7 @@ module.exports = (app) => {
 
   app.use(version + "/patient", authMiddleware.requireAuth, patientRoutes);
 
-  app.use(version + "/doctor", authMiddleware.requireAuth, doctorRoutes);
+  app.use(version + "/doctor", doctorRoutes);
 
   app.use(version + "/appointment", authMiddleware.requireAuth, appointmentRoutes);
 
