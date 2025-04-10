@@ -11,22 +11,22 @@ const authMiddleware = require("../middlewares/auth.middleware");
 module.exports = (app) => {
   const version = "/api";
 
-  app.use(version + "/patient", patientRoutes);
-
-  app.use(version + "/doctor", doctorRoutes);
-
   app.use(version + "/account", accountRoutes);
 
-  app.use(version + "/appointment", appointmentRoutes);
+  app.use(version + "/patient", authMiddleware.requireAuth, patientRoutes);
 
-  app.use(version + "/prescription", prescriptionRoutes);
+  app.use(version + "/doctor", authMiddleware.requireAuth, doctorRoutes);
 
-  app.use(version + "/specialty", specialtyRoutes);
+  app.use(version + "/appointment", authMiddleware.requireAuth, appointmentRoutes);
 
-  app.use(version + "/bill", billRoutes);
+  app.use(version + "/prescription", authMiddleware.requireAuth, prescriptionRoutes);
 
-  app.use(version + "/labresult", labResultRoutes);
+  app.use(version + "/specialty", authMiddleware.requireAuth, specialtyRoutes);
 
-  app.use(version + "/medicalhistory", medicalHistoryRoutes);
+  app.use(version + "/bill", authMiddleware.requireAuth, billRoutes);
+
+  app.use(version + "/labresult", authMiddleware.requireAuth, labResultRoutes);
+
+  app.use(version + "/medicalhistory", authMiddleware.requireAuth, medicalHistoryRoutes);
 
 };

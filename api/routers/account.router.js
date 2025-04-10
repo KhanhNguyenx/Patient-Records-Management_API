@@ -10,5 +10,4 @@ router.post("/login", controller.login);
 
 router.post("/change-password",authMiddleware.requireAuth, controller.changePassword);
 
-
 module.exports = router;
