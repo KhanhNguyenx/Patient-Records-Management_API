@@ -91,29 +91,28 @@ module.exports.create = async (req, res) => {
 // [PATCH] /api/Doctor/edit/:id
 module.exports.edit = async (req, res) => {
   try {
+    const id = req.params.id;
     const existEmail = await Doctor.findOne({
       email: req.body.email,
       deleted: false,
     });
-    if (existEmail) {
+
+    // Kiểm tra nếu existEmail tồn tại và không phải của Doctor đang được cập nhật.
+    if (existEmail && existEmail._id.toString() !== id) {
       return res.json({
         code: 400,
         message: "Email đã tồn tại!",
       });
-    } else {
-      const id = req.params.id;
-      await Doctor.updateOne(
-        {
-          _id: id,
-        },
-        req.body
-      );
-
-      res.json({
-        code: 200,
-        message: "Cập nhật thành công!",
-      });
     }
+
+    await Doctor.updateOne(
+      { _id: id },
+      req.body
+    );
+    res.json({
+      code: 200,
+      message: "Cập nhật thành công!",
+    });
   } catch (error) {
     res.json({
       code: 400,

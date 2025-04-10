@@ -90,24 +90,23 @@ module.exports.create = async (req, res) => {
 // [PATCH] /api/patient/edit/:id
 module.exports.edit = async (req, res) => {
   try {
+    const id = req.params.id;
     const existEmail = await Patient.findOne({
       email: req.body.email,
       deleted: false,
     });
-    if (existEmail) {
+    
+    // Nếu tồn tại existEmail và _id của nó khác với id đang cập nhật
+    if (existEmail && existEmail._id.toString() !== id) {
       return res.json({
         code: 400,
         message: "Email đã tồn tại!",
       });
     } else {
-      const id = req.params.id;
       await Patient.updateOne(
-        {
-          _id: id,
-        },
+        { _id: id },
         req.body
       );
-
       res.json({
         code: 200,
         message: "Cập nhật thành công!",
@@ -120,6 +119,7 @@ module.exports.edit = async (req, res) => {
     });
   }
 };
+
 // [PATCH] /api/patient/delete/:id
 module.exports.delete = async (req, res) => {
   try {
