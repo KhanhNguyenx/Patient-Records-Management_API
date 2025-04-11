@@ -11,10 +11,10 @@ module.exports.getList = async (req, res) => {
   let objectSearch = searchHelper(req.query);
   if (req.query.keyword) {
     find.$or = [
-      { firstName: objectSearch.regex },  
-      { lastName: objectSearch.regex },   
-      { email: objectSearch.regex },   
-      { phone: objectSearch.regex },   
+      { firstName: objectSearch.regex },
+      { lastName: objectSearch.regex },
+      { email: objectSearch.regex },
+      { phone: objectSearch.regex },
       { address: objectSearch.regex },
     ];
   }
@@ -30,12 +30,16 @@ module.exports.getList = async (req, res) => {
     req.query,
     countPatient
   );
-  // End Pagination
 
+  // Sort
   const sort = {};
   if (req.query.sortKey && req.query.sortValue) {
     sort[req.query.sortKey] = req.query.sortValue;
+  } else {
+    // Mặc định sắp xếp theo _id giảm dần (mới nhất trước)
+    sort["_id"] = -1;
   }
+
   const patient = await Patient.find(find)
     .sort(sort)
     .skip(objectPagination.skip)
@@ -43,6 +47,7 @@ module.exports.getList = async (req, res) => {
 
   res.json(patient);
 };
+
 // [GET] /api/v1/tasks/getById/:id
 module.exports.getById = async (req, res) => {
   try {
@@ -95,7 +100,7 @@ module.exports.edit = async (req, res) => {
       email: req.body.email,
       deleted: false,
     });
-    
+
     // Nếu tồn tại existEmail và _id của nó khác với id đang cập nhật
     if (existEmail && existEmail._id.toString() !== id) {
       return res.json({
@@ -103,10 +108,7 @@ module.exports.edit = async (req, res) => {
         message: "Email đã tồn tại!",
       });
     } else {
-      await Patient.updateOne(
-        { _id: id },
-        req.body
-      );
+      await Patient.updateOne({ _id: id }, req.body);
       res.json({
         code: 200,
         message: "Cập nhật thành công!",

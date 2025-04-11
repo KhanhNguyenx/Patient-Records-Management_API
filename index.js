@@ -22,6 +22,10 @@ app.use(cookieParser());
 // Route API version 1
 routeApi(app);
 
+app.use("/", (req, res) => {
+  res.send("Welcome to the API!");
+}
+);
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
